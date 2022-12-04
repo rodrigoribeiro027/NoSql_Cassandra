@@ -27,7 +27,7 @@ def inserir_produto(session):
                     (%s,%s,%s,%s,%s)
         """,
         (str(uuid.uuid1()),nome, descricao, preco, vendedor))
-        break
+        
 
 
 def deletProduto(session):

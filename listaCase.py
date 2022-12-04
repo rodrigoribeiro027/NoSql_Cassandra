@@ -1,22 +1,17 @@
 import usuario.usuario as inserirUsuario
-from cassandra.cluster import Cluster
-from cassandra.auth import PlainTextAuthProvider
-
-cloud_config= {
-        'secure_connect_bundle': 'secure-connect-cassandra.zip'
-}
-auth_provider = PlainTextAuthProvider('UodQtmnAfrIHplpeSxvUIfqU', 'nAEupo89GW-KbTMkMwFs7MQfFaRsJAEkvDuJfGyKBekG0zBinzp2.YLJ+FbRu5SkYKlZMmAmZQYDw40OCwHOqWQITqSkZJQBQTMX+gj-MqUFTTBgAydl7WTYMZ2izco9')
-cluster = Cluster(cloud=cloud_config, auth_provider=auth_provider)
-session = cluster.connect('mercado_livre')
+import produtos.produto as produto
+import Vendedor.vendedor as vendedor
 
 def CaseUsuario(session):
     execucao = True
     while execucao:
         print('''Escolha Uma Opção:\n
         - [0]Voltar\n
-        - [1]CadastrarUsuario\n
-        - [2]DeletarUsuario\n
-        - [3]BuscaUsuario\n
+        - [1]Cadastrar\n
+        - [2]Deletar\n
+        - [3]Buscar\n
+        - [4]Atualizar\n
+
         ''')
         escolha = input(str('escolha Uma Obção:'))
         match escolha:
@@ -31,3 +26,58 @@ def CaseUsuario(session):
             case '3':
                 inserirUsuario.BuscaUsuario(session)
                 break
+            case '4':
+                inserirUsuario.atualizarUsuario(session)
+                break
+
+def CaseProduto(session):
+    execucao = True
+    while execucao:
+        print('''Escolha Uma Opção:\n
+        - [0]Voltar\n
+        - [1]Cadastrar\n
+        - [2]Deletar\n
+        - [3]Buscar\n
+        - [4]Atualizar\n
+
+        ''')
+        escolha = input(str('escolha Uma Obção:'))
+        match escolha:
+            case '0':
+                return
+            case '1':
+                produto.inserir_produto(session)
+                break
+            case '2':
+                produto.deletProduto(session)
+                break
+            case '3':
+                produto.BuscaProduto(session)
+                break
+            case '4':
+                inserirUsuario.atualizarUsuario(session)
+                break
+
+def CaseVendedor(session):
+    execucao = True
+    while execucao:
+        print('''Escolha Uma Opção:\n
+        - [0]Voltar\n
+        - [1]Cadastrar\n
+        - [2]Deletar\n
+        - [3]Buscar\n
+        - [4]Atualizar\n
+
+        ''')
+        escolha = input(str('escolha Uma Obção:'))
+        match escolha:
+            case '0':
+                return
+            case '1':
+               vendedor.inserirVendedor(session)
+            case '2':
+               vendedor.deleteVendedor(session)
+            case '3':
+               vendedor.BuscaVendedor(session)
+            case '4':
+               vendedor.atualizarVendedor(session)
