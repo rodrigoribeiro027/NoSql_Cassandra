@@ -13,7 +13,7 @@ def ComprarProduto(session):
         usuarioSelecionado = {'id':usuario.id, 'nome':usuario.nome, 'email':usuario.email ,'cpf':usuario.cpf,'endereco':usuario.endereco}
     for produto in Salvaproduto:
         produtoSelecionado = {'id':produto.id, 'nome':produto.nome, 'preco':produto.preco,'vendedor':produto.vendedor}
-        PreçoProduto = {'preco':produto.preco} 
+        PreçoProduto = produto.preco 
     session.execute("""
         insert into compra (id,usuario,produto,total) values (%s,%s,%s,%s)
                 """, 
@@ -50,15 +50,21 @@ def deleteCompra(session):
 def atualizarCompra(session):
     BuscaCompraDetalhada(session)
     CompraID = input(str('Digite o id do Compra: '))
-    BuscaUsuarioSelecao(session)
-    usuarioID = input(str('Digite o id do usuario: '))
     BuscaProdutoDetalhe(session)
     produtoID = input(str('Digite id do produto: '))
-    Salvausuario = session.execute(f"select * from usuario where id ='{usuarioID}'")
+    SalvaCompra = session.execute(f"select * from compra where id ='{CompraID}'")
     Salvaproduto = session.execute(f"select * from produto where id ='{produtoID}'")
-    for usuario in Salvausuario:
-        usuarioSelecionado = {'id':usuario.id, 'nome':usuario.nome, 'email':usuario.email ,'cpf':usuario.cpf,'endereco':usuario.endereco}
-    for produto in Salvaproduto:
-        produtoSelecionado = {'id':produto.id, 'nome':produto.nome, 'preco':produto.preco,'vendedor':produto.vendedor}
-    session.execute(f"update compra set usuario='{usuarioSelecionado}',produto'{produtoSelecionado}'  where id='{CompraID}' '")
+    for compra in SalvaCompra:
+        for produto in Salvaproduto:
+            produtoSelecionado = {'id':produto.id, 'nome':produto.nome, 'preco':produto.preco,'vendedor':produto.vendedor}
+            PreçoProduto = produto.preco
+            CompraSelecionado = {'id':compra.id, 'usuario':compra.usuario,'produto':produtoSelecionado, 'total':PreçoProduto}
+    session.execute(f"delete from compra where id='{CompraID}'")
+    session.execute("""
+        insert into compra (id,usuario,produto,total) values (%s,%s,%s,%s)
+                """, 
+    (str(CompraSelecionado['id']),str(CompraSelecionado['usuario']),str(CompraSelecionado['produto']),str(CompraSelecionado['total']) ))
     print("\nCompra Alterado :D\n")
+    print(f'-------------------------------------------------------------------------------------------')
+
+
