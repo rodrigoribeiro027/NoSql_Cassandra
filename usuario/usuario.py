@@ -30,6 +30,16 @@ def BuscaUsuario(session):
         print(f'endereco: {usuario.endereco}')
         print(f'-------------------------------------------------------------------------------------------')
 
+
+
+def BuscaUsuarioSelecao(session):
+    print ("\n ----------------------------------- Listando Usuarios ----------------------------------- \n")
+    for usuario in session.execute('select * from usuario'):
+        print(f'id: {usuario.id}')
+        print(f'nome: {usuario.nome}')
+        print(f'email: {usuario.email}')
+        print(f'-------------------------------------------------------------------------------------------')
+
 def atualizarUsuario(session):
     BuscaUsuario(session)
     usuarioid = input(str('Digite o id do Usuario que deseja Atualizar: '))
@@ -37,5 +47,5 @@ def atualizarUsuario(session):
     email = input(str('Digite o endereço de email: '))
     cpf = input(str('Digite o numero do cpf: '))
     endereco = input(str('Digite o endereço: '))
-    session.execute(f"update usuario set nome='{nome}', cpf='{cpf}', email='{email}', endereco='{endereco}' where id='{usuarioid}'")
+    session.execute(f"update usuario set nome='{nome}', cpf='{cpf}', email='{email}', endereco='{endereco}' where id='{usuarioid}' ")
     print("\nUsuario Alterado :D\n")

@@ -62,6 +62,6 @@ while execucao:
         case '2':
             listadecases.CaseProduto(session)
         case '3':
-            break
+            listadecases.CaseCompra(session)
         case '4':
             listadecases.CaseVendedor(session)
